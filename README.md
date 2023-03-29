@@ -125,11 +125,12 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 
 When Testing, we found the following issues : (The custom chart we used is TrueCharts)
 
-*  When deploying apps from the official chart, the apps are accessible only on NodePort, we cannot configure them to use a certain type of service (ClusterIP, LoadBalancer, etc.). on the other hand, when deploying apps from the custom chart, we can configure the service type to use.
-* When deploying a reverse proxy from the custom chart, it works as expected, but pairing it with apps from the official chart, it's not possible to configure them to use the reverse proxy. (For example, when deploying a reverse proxy, and a Nextcloud app from the official chart, it's not possible to configure the ingress option of the Nextcloud app to use the reverse proxy). 
-* When deploying apps from a custom chart, there's an option to expose the apps as a ClusterIP, but not on the official chart (Same App, different chart).
-* When deploying apps from the custom chart, it's possible to add custom storage, but for some raison, it doesn't work as expected. The apps are deployed, but the storage is not mounted (All type of storage: NFS, HostPath, EmptyDir, PVC, etc.). Also, we can deploy an app using custom chart when there's no storage needed in the configuration, but when we add a storage, it doesn't work as expected (For a lot of apps using the custom chart).
-
+*   When deploying apps from the official chart, the apps are accessible only on NodePort, we cannot configure them to use a certain type of service (ClusterIP, LoadBalancer, etc.). on the other hand, when deploying apps from the custom chart, we can configure the service type to use.
+*   When deploying a reverse proxy from the custom chart, it works as expected, but pairing it with apps from the official chart, it's not possible to configure them to use the reverse proxy. (For example, when deploying a reverse proxy, and a Nextcloud app from the official chart, it's not possible to configure the ingress option of the Nextcloud app to use the reverse proxy). 
+*   When deploying apps from a custom chart, there's an option to expose the apps as a ClusterIP, but not on the official chart (Same App, different chart).
+*   When deploying apps from the custom chart, it's possible to add custom storage, but for some raison, it doesn't work as expected. The apps are deployed, but the storage is not mounted (All type of storage: NFS, HostPath, EmptyDir, PVC, etc.). Also, we can deploy an app using custom chart when there's no storage needed in the configuration, but when we add a storage, it doesn't work as expected (For a lot of apps using the custom chart).
+*   When deploying apps using **Launch Docker Image** option, there's no option to configure the service type (NodePort, ClusterIP, LoadBalancer, etc.), it's always NodePort. Also, there's no option to configure the ingress option.
+*   It's required to edit the **timezone** of TrueNAS SCALE to match the timezone of the host, otherwise, the apps deployed from the custom chart will not work as expected (For example, when deploying a Nextcloud app from the custom chart, the timezone is not set correctly, and the app is not working as expected).
 
 ## References
 
