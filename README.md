@@ -9,7 +9,7 @@ TrueNAS SCALE is Open Source, based on Debian Linux, and free to download and us
 *   **Containerized Applications** - TrueNAS SCALE provides a simple way to deploy and manage applications in containers. With support for Docker and Kubernetes, it’s easy to customize and add applications to suit a wide variety of needs.
 *   **Virtual Machines** - TrueNAS SCALE provides a simple way to deploy and manage virtual machines. With support for KVM, it’s easy to customize and add virtual machines to suit a wide variety of needs.
 *   **Open Source** - TrueNAS SCALE is Open Source, based on Debian Linux, and free to download and use. With hundreds of thousands of testers and contributors, the TrueNAS community development model enables broader testing, and ultimately, a higher quality product, in addition to its unbeaten value. Join the “Storage Freedom” movement and enjoy the benefits of Open Source economics.
-*   **Enterprise Storage** - TrueNAS SCALE provides enterprise storage features such as ZFS, snapshots, replication, and more.
+*   **Enterprise Storage** - TrueNAS SCALE provides some enterprise storage features such as ZFS, snapshots, replication, and more.
 *   **Simplified Storage Management** - TrueNAS SCALE provides a simple way to manage storage. With support for iSCSI, NFS, and SMB, it’s easy to customize and add storage to suit a wide variety of needs.
 *   **Simplified Network Management** - TrueNAS SCALE provides a simple way to manage network interfaces. With support for VLANs, it’s easy to customize and add network interfaces to suit a wide variety of needs.
 *   **Simplified User Management** - TrueNAS SCALE provides a simple way to manage users. With support for LDAP, it’s easy to customize and add users to suit a wide variety of needs.
@@ -92,7 +92,18 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 *   TrueNAS SCALE does not support High Availability.
 *   TrueNAS SCALE does not support TrueNAS Enterprise features such as TrueNAS Enterprise Plugins, TrueNAS Enterprise Active Directory, TrueNAS Enterprise LDAP, TrueNAS Enterprise Kerberos, TrueNAS Enterprise SNMP, TrueNAS Enterprise S3...
 *   TrueNAS SCALE does not support TrueNAS Enterprise hardware features such as TrueNAS Enterprise Hardware Encryption, TrueNAS Enterprise Hardware Acceleration...
+* TrueNAS SCALE does not offer a lot of customization options for the applications deployed from a docker image, or the official chart (Forcing you to exposing apps in nodePort always, not integrating a reverse proxy, etc.)
 * [...]
+
+## Known Issues
+
+When Testing, we found the following issues : (The custom chart we used is TrueCharts)
+
+*  When deploying apps from the official chart, the apps are accessible only on NodePort, we cannot configure them to use a certain type of service (ClusterIP, LoadBalancer, etc.). on the other hand, when deploying apps from the custom chart, we can configure the service type to use.
+* When deploying a reverse proxy from the custom chart, it works as expected, but pairing it with apps from the official chart, it's not possible to configure them to use the reverse proxy. (For example, when deploying a reverse proxy, and a Nextcloud app from the official chart, it's not possible to configure the ingress option of the Nextcloud app to use the reverse proxy). 
+* When deploying apps from a custom chart, there's an option to expose the apps as a ClusterIP, but not on the official chart (Same App, different chart).
+* When deploying apps from the custom chart, it's possible to add custom storage, but for some raison, it doesn't work as expected. The apps are deployed, but the storage is not mounted (All type of storage: NFS, HostPath, EmptyDir, PVC, etc.). Also, we can deploy an app using custom chart when there's no storage needed in the configuration, but when we add a storage, it doesn't work as expected (For a lot of apps using the custom chart).
+
 
 ## References
 
@@ -102,3 +113,4 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 *   [TrueNAS SCALE User Guide](https://www.truenas.com/docs/scale/userguide/)
 *   [TrueNAS SCALE API Reference](https://www.truenas.com/docs/scale/api/)
 *   [TrueNAS SCALE Troubleshooting Guide](https://www.truenas.com/docs/scale/troubleshooting/)
+*   [Youtube: TrueNAS Scale the ULTIMATE Home Server? Docker, kubernetes, Apps - Christian Lampa](https://www.youtube.com/watch?v=LJY9KBbL4j0)
