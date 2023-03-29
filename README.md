@@ -4,6 +4,8 @@ TrueNAS SCALE provides simple access to the well-established Linux container eco
 
 TrueNAS SCALE is Open Source, based on Debian Linux, and free to download and use. With hundreds of thousands of testers and contributors, the TrueNAS community development model enables broader testing, and ultimately, a higher quality product, in addition to its unbeaten value. Join the “Storage Freedom” movement and enjoy the benefits of Open Source economics. 
 
+All things said, TrueNAS SCALE is a great way to get started with containers and virtualization, but it has its [limitations](#limitations).
+
 ## Features
 
 *   **Containerized Applications** - TrueNAS SCALE provides a simple way to deploy and manage applications in containers. With support for Docker and Kubernetes, it’s easy to customize and add applications to suit a wide variety of needs.
