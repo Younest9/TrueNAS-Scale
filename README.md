@@ -36,17 +36,17 @@ TrueNAS SCALE can be installed on a variety of hardware platforms.
 
 1.  Log in to the TrueNAS SCALE web interface using the credentials you set during installation.
 2.  If you want to use a static IP address, go to **Network**, and click **Edit** next to the interface you want to configure.
-> If you want to use DHCP, you can skip this step.
-> 
-> If you want to use static IP address, you need to add a static DNS server to the interface.
+    > If you want to use DHCP, you can skip this step.
+    > 
+    > If you want to use static IP address, you need to add a static DNS server to the interface.
 3.  Create a pool by going to **Storage**, and click **Create Pool**.
->  You can create a dataset by going to **Storage**, and click **Create Dataset**.
->
->  You can create a share by going to **Sharing**, and click **Create Share**.
->
->  You can create a user by going to **Accounts**, and click **Create User**.
->
->  You can create a group by going to **Accounts**, and click **Create Group**.
+    >  You can create a dataset by going to **Storage**, and click **Create Dataset**.
+    >
+    >  You can create a share by going to **Sharing**, and click **Create Share**.
+    >
+    >  You can create a user by going to **Accounts**, and click **Create User**.
+    >
+    >  You can create a group by going to **Accounts**, and click **Create Group**.
 
 ## Application Deployment
 
@@ -61,9 +61,9 @@ To deploy a Docker container, follow these steps:
 1.  Log in to the TrueNAS SCALE web interface.
 2.  Create a Dataset by going to **Storage**, and click **Create Dataset** (optional, but it's recommended to isolate app data).
 3.  Click **Apps**.
-> If it's your first time using the Apps page, you will be prompted to select a pool.
-> 
-> If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
+    > If it's your first time using the Apps page, you will be prompted to select a pool.
+    > 
+    > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
 4.  Click **Launch Docker Image**.
 5.  Enter the configuration options for the Docker container.
 6.  Click **Save**.
@@ -75,9 +75,9 @@ You can deploy built-in applications from the TrueNAS SCALE web interface. To de
 1.  Log in to the TrueNAS SCALE web interface.
 2.  Create a Dataset by going to **Storage**, and click **Create Dataset** (optional, but it's recommended to isolate app data).
 3.  Click **Apps**.
-> If it's your first time using the Apps page, you will be prompted to select a pool.
-> 
-> If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
+    > If it's your first time using the Apps page, you will be prompted to select a pool.
+    > 
+    > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
 4.  Click **Available Apps**.
 5.  Click **Install** next to the application you want to deploy.
 6.  Enter the configuration options for the application.
@@ -89,20 +89,20 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 
 1.  Log in to the TrueNAS SCALE web interface.
 2.  Click **Apps**.
-> If it's your first time using the Apps page, you will be prompted to select a pool.
->
-> If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
+    > If it's your first time using the Apps page, you will be prompted to select a pool.
+    >
+    > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
 3.  Click **Manage Catalogs**.
 4.  Click **Add Catalog**.
 5.  Enter the **URL** of the **custom chart (repository)**, the **preferred Trains**, the **branch**, and the **name** of the catalog.
 6.  Click **Save**.
 7.  Create a Dataset by going to **Storage**, and click **Create Dataset** (optional, but it's recommended to isolate app data).
 8.  Click **Available Apps**.
-> You may wait a few minutes for the added chart's applications to appear in the list.
->
-> After a few moments, you should now see new applications added to the list.
->
-> If you don't see the new applications, click **Refresh All**.
+    > You may wait a few minutes for the added chart's applications to appear in the list.
+    >
+    > After a few moments, you should now see new applications added to the list.
+    >
+    > If you don't see the new applications, click **Refresh All**.
 9.  Click **Install** next to the application you want to deploy.
 10.  Enter the configuration options for the application.
 11. Click **Save**.
