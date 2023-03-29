@@ -74,7 +74,7 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
 3.  Click **Manage Catalogs**.
 4.  Click **Add Catalog**.
-5.  Enter the URL of the custom chart.
+5.  Enter the **URL** of the **custom chart (repository)**, the **preferred Trains**, the **branch**, and the **name** of the catalog.
 6.  Click **Save**.
 7.  Click **Available Apps**.
 8.  Click **Install** next to the application you want to deploy.
