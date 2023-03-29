@@ -77,6 +77,11 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 5.  Enter the **URL** of the **custom chart (repository)**, the **preferred Trains**, the **branch**, and the **name** of the catalog.
 6.  Click **Save**.
 7.  Click **Available Apps**.
+> You may wait a few minutes for the added chart's applications to appear in the list.
+>
+> After a few moments, you should now see new applications added to the list.
+>
+> If you don't see the new applications, click **Refresh All**.
 8.  Click **Install** next to the application you want to deploy.
 9.  Enter the configuration options for the application.
 10. Click **Save**.
