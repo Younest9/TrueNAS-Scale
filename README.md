@@ -21,9 +21,11 @@ TrueNAS SCALE can be installed on a variety of hardware platforms.
 
 ### Hardware Requirements
 
-*   2GB RAM
-*   2GB of disk space
-*   1GB network interface
+*   8GB of RAM (16GB or more recommended)
+*   16GB SSD Boot Device
+*   2 Identically Sized Storage Devices 
+*   Network Port
+    > Hardware RAID is not required
 
 ### Installation Process
 
@@ -113,7 +115,7 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 11. Click **Save**.
 
 ## Limitations
-
+> The version of TrueNAS SCALE we are using for testing is 22.12.1.
 *   TrueNAS SCALE does not support Clustering.
 *   TrueNAS SCALE does not support High Availability.
 *   TrueNAS SCALE does not support TrueNAS Enterprise features such as TrueNAS Enterprise Plugins, TrueNAS Enterprise Active Directory, TrueNAS Enterprise LDAP, TrueNAS Enterprise Kerberos, TrueNAS Enterprise SNMP, TrueNAS Enterprise S3...
@@ -122,7 +124,7 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 * [...]
 
 ## Known Issues
-
+> The version of TrueNAS SCALE we are using for testing is 22.12.1.
 When Testing, we found the following issues : (The custom chart we used is TrueCharts)
 
 *   When deploying apps from the official chart, the apps are accessible only on NodePort, we cannot configure them to use a certain type of service (ClusterIP, LoadBalancer, etc.). on the other hand, when deploying apps from the custom chart, we can configure the service type to use.
