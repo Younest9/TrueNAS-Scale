@@ -36,10 +36,12 @@ TrueNAS SCALE can be installed on a variety of hardware platforms.
 
 1.  Log in to the TrueNAS SCALE web interface using the credentials you set during installation.
 2.  If you want to use a static IP address, go to **Network**, and click **Edit** next to the interface you want to configure.
+
     > If you want to use DHCP, you can skip this step.
     > 
     > If you want to use static IP address, you need to add a static DNS server to the interface.
 3.  Create a pool by going to **Storage**, and click **Create Pool**.
+
     >  You can create a dataset by going to **Storage**, and click **Create Dataset**.
     >
     >  You can create a share by going to **Sharing**, and click **Create Share**.
@@ -61,6 +63,7 @@ To deploy a Docker container, follow these steps:
 1.  Log in to the TrueNAS SCALE web interface.
 2.  Create a Dataset by going to **Storage**, and click **Create Dataset** (optional, but it's recommended to isolate app data).
 3.  Click **Apps**.
+
     > If it's your first time using the Apps page, you will be prompted to select a pool.
     > 
     > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
@@ -75,6 +78,7 @@ You can deploy built-in applications from the TrueNAS SCALE web interface. To de
 1.  Log in to the TrueNAS SCALE web interface.
 2.  Create a Dataset by going to **Storage**, and click **Create Dataset** (optional, but it's recommended to isolate app data).
 3.  Click **Apps**.
+
     > If it's your first time using the Apps page, you will be prompted to select a pool.
     > 
     > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
@@ -89,6 +93,7 @@ You can deploy custom applications from the TrueNAS SCALE web interface. To depl
 
 1.  Log in to the TrueNAS SCALE web interface.
 2.  Click **Apps**.
+
     > If it's your first time using the Apps page, you will be prompted to select a pool.
     >
     > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
