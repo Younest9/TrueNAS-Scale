@@ -1,118 +1,164 @@
-# TrueNAS Community Edition — lab notes
+# TrueNAS Scale
 
-Practical notes for running **TrueNAS Community Edition** (formerly TrueNAS SCALE) as a homelab NAS. This is **not** a vendor brochure: official docs win for install wizards and screenshots.
+TrueNAS SCALE provides simple access to the well-established Linux container ecosystem and makes application deployment easy. With support for KVM virtual machines, Kubernetes, and Docker containers, it’s easy to customize and add applications to suit a wide variety of needs.
 
-**Hands-on status:** The only version **personally exercised** in this repo’s history was **SCALE 22.12.1** (Kubernetes Apps / TrueCharts era — see [Historical lab notes](#historical-lab-notes-scale-22121--truecharts)). Sections about **25.10 / Community Edition / Docker Apps** are **compiled from official TrueNAS documentation** (Software Status, 25.10 docs, Apps Market) as of September 2026 — **not** a fresh re-lab on Goldeye. Treat them as pointers, not “I just tested this.”
+TrueNAS SCALE is Open Source, based on Debian Linux, and free to download and use. With hundreds of thousands of testers and contributors, the TrueNAS community development model enables broader testing, and ultimately, a higher quality product, in addition to its unbeaten value. Join the “Storage Freedom” movement and enjoy the benefits of Open Source economics.
 
-**Doc baseline:** TrueNAS **25.10.x (Goldeye)** — recommended stable on the [Software Status](https://www.truenas.com/docs/softwarestatus/) page as of September 2026 (e.g. **25.10.7**). Early train: **26.x BETA** (not for production data).
+All things said, TrueNAS SCALE is a great way to get started with containers and virtualization, but it has its [limitations](#limitations).
 
-> Naming: from **25.04** onward, iX calls the free Linux product **TrueNAS Community Edition**. Older material still says “SCALE”; same lineage.
+> **Hands-on note:** Everything below (Features, Installation, Application Deployment, Limitations, Known Issues) was written and exercised against **TrueNAS SCALE 22.12.1** (Kubernetes Apps / TrueCharts). It was **not** retested on later trains. From **25.04** onward, iX names the free product **TrueNAS Community Edition**; from **24.10** onward, Apps use a **Docker** backend instead of the old Kubernetes / charts model. Treat the 22.12.1 Known Issues as historical. For current ISO / docs, start from [Software Status](https://www.truenas.com/docs/softwarestatus/) and [25.10 docs](https://www.truenas.com/docs/scale/25.10/) — see also [Current trains (not retested)](#current-trains-not-retested).
 
-## Why use it
+## Features
 
-- ZFS pools, snapshots, replication, SMB/NFS/iSCSI shares
-- Web UI for day-to-day storage ops
-- **Apps** on a Docker backend (since **24.10**), plus VMs / Containers on current trains
-- Free Community Edition for non-enterprise use; Enterprise adds HA and appliance features
+*   **Containerized Applications** - TrueNAS SCALE provides a simple way to deploy and manage applications in containers. With support for Docker and Kubernetes, it’s easy to customize and add applications to suit a wide variety of needs.
+*   **Virtual Machines** - TrueNAS SCALE provides a simple way to deploy and manage virtual machines. With support for KVM, it’s easy to customize and add virtual machines to suit a wide variety of needs.
+*   **Open Source** - TrueNAS SCALE is Open Source, based on Debian Linux, and free to download and use. With hundreds of thousands of testers and contributors, the TrueNAS community development model enables broader testing, and ultimately, a higher quality product, in addition to its unbeaten value. Join the “Storage Freedom” movement and enjoy the benefits of Open Source economics.
+*   **Enterprise Storage** - TrueNAS SCALE provides some enterprise storage features such as ZFS, snapshots, replication, and more.
+*   **Simplified Storage Management** - TrueNAS SCALE provides a simple way to manage storage. With support for iSCSI, NFS, and SMB, it’s easy to customize and add storage to suit a wide variety of needs.
+*   **Simplified Network Management** - TrueNAS SCALE provides a simple way to manage network interfaces. With support for VLANs, it’s easy to customize and add network interfaces to suit a wide variety of needs.
+*   **Simplified User Management** - TrueNAS SCALE provides a simple way to manage users. With support for LDAP, it’s easy to customize and add users to suit a wide variety of needs.
+*   **Simplified System Management** - TrueNAS SCALE provides a simple way to manage system settings. With support for system settings, it’s easy to customize and add system settings to suit a wide variety of needs.
 
-For a full k8s control plane or heavy custom ingress meshes, prefer a dedicated cluster (see sibling notes: [kubernetes](https://github.com/Younest9/kubernetes), [okd](https://github.com/Younest9/okd)) and treat TrueNAS as storage.
+## Installation
 
-## Hardware (official ballpark)
+TrueNAS SCALE can be installed on a variety of hardware platforms.
 
-From current Community Edition guidance (verify on the [download / requirements](https://www.truenas.com/download/) pages before buying):
+### Hardware Requirements
 
-- **RAM:** 8 GB minimum; **16 GB+** recommended (ZFS + Apps needs headroom)
-- **Boot:** small SSD/NVMe for the OS
-- **Data:** redundant disks for a real pool (mirrors / RAIDZ as you design)
-- Prefer **HBA / IT-mode** over hardware RAID controllers for ZFS
+*   8GB of RAM (16GB or more recommended)
+*   16GB SSD Boot Device
+*   2 Identically Sized Storage Devices 
+*   Network Port
+    > Hardware RAID is not required
 
-## Install (high level)
+### Installation Process
 
-1. Download the current Community Edition ISO from [TrueNAS downloads](https://www.truenas.com/download-truenas-community-edition) (or the main [download hub](https://www.truenas.com/download/)).
-2. Write to USB (or attach ISO to a VM).
-3. Boot and complete the installer; set root / admin credentials carefully.
-4. Open the web UI, set **Network** (static IP + DNS if not using DHCP), then create a **Storage** pool.
+1.  Download the latest TrueNAS SCALE ISO image from the [TrueNAS SCALE Download Page](https://www.truenas.com/download-truenas-scale/).
+2.  Burn the ISO image to a USB drive, or if you are using a virtual machine, mount the ISO image.
+3.  Boot the system from the USB drive or ISO image.
+4.  Follow the on-screen instructions to install TrueNAS SCALE.
 
-Official walkthroughs: [Getting Started / 25.10](https://www.truenas.com/docs/scale/25.10/), [Installation](https://www.truenas.com/docs/scale/25.10/gettingstarted/install/).
+### Post-Installation Process
 
-## Apps on 24.10+ / 25.10 (Docker)
+1.  Log in to the TrueNAS SCALE web interface using the credentials you set during installation.
+2.  If you want to use a static IP address, go to **Network**, and click **Edit** next to the interface you want to configure.
 
-TrueNAS **24.10 (Electric Eel)** replaced the old **Kubernetes / k3s Apps** backend with **Docker**. On **25.10**:
+    > If you want to use DHCP, you can skip this step.
+    > 
+    > If you want to use static IP address, you need to add a static DNS server to the interface.
+3.  Create a pool by going to **Storage**, and click **Create Pool**.
 
-1. **Apps → Configuration → Choose Pool** (or Settings) — pick a pool for app data.
-2. **Discover Apps** — Stable / Community catalogs (Enterprise catalog on licensed systems).
-3. Install from catalog, or deploy custom workloads:
-   - **Custom App** (guided), or
-   - **Install via YAML** (Docker Compose) — see [Installing Custom Apps](https://apps.truenas.com/managing-apps/installing-custom-apps/).
+    >  You can create a dataset by going to **Storage**, and click **Create Dataset**.
+    >
+    >  You can create a share by going to **Sharing**, and click **Create Share**.
+    >
+    >  You can create a user by going to **Accounts**, and click **Create User**.
+    >
+    >  You can create a group by going to **Accounts**, and click **Create Group**.
 
-Compose tip (current Apps Market docs): YAML should start with a top-level Compose element such as `services:` (or `name:` / `include:`). Prefer writing Compose offline, then paste.
+## Application Deployment
 
-**TrueCharts / third-party Helm catalogs** from the SCALE Kubernetes era are **not** the supported path on Docker-backed Apps. Recreate with official/community catalog apps or Compose; TrueCharts moved off SCALE Apps (Talos/cluster tooling for their own path).
+TrueNAS SCALE provides a simple way to deploy and manage applications in containers. With support for Docker and Kubernetes, it’s easy to customize and add applications to suit a wide variety of needs.
 
-Useful links:
+### Using Docker Images
 
-- [Apps Market — initial setup](https://apps.truenas.com/getting-started/initial-setup/)
-- [Configuring VMs and Apps (25.10)](https://www.truenas.com/docs/scale/25.10/gettingstarted/configure/vmandappconfigscale/)
+You can deploy Docker containers from the TrueNAS SCALE web interface.
 
-## Storage & sharing (checklist)
+To deploy a Docker container, follow these steps:
 
-1. Create pool → datasets for shares / app data (isolate app datasets).
-2. **Sharing:** SMB / NFS / iSCSI as needed.
-3. Snapshots + periodic replication if you care about recovery.
-4. Keep OS boot pool separate from bulk data when possible.
+1.  Log in to the TrueNAS SCALE web interface.
+2.  Create a Dataset by going to **Storage**, and click **Create Dataset** (optional, but it's recommended to isolate app data).
+3.  Click **Apps**.
 
-## Limitations (Community Edition — product reality)
+    > If it's your first time using the Apps page, you will be prompted to select a pool.
+    > 
+    > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
+4.  Click **Launch Docker Image**.
+5.  Enter the configuration options for the Docker container.
+6.  Click **Save**.
 
-Still true for Community Edition vs Enterprise (confirm on current Enterprise marketing/docs):
+### Using Built-in Applications (Built-in Charts)
 
-- No TrueNAS **High Availability** cluster appliance features on CE
-- Enterprise-only hardware / support / some directory & appliance integrations
-- Apps are **Docker-based**, not a full DIY Kubernetes distribution — fine for NAS-adjacent services; not a substitute for a purpose-built k8s lab
+You can deploy built-in applications from the TrueNAS SCALE web interface. To deploy a built-in application, follow these steps:
 
-## Historical lab notes (SCALE **22.12.1** + TrueCharts)
+1.  Log in to the TrueNAS SCALE web interface.
+2.  Create a Dataset by going to **Storage**, and click **Create Dataset** (optional, but it's recommended to isolate app data).
+3.  Click **Apps**.
 
-The text below is the **original hands-on write-up** from this repo (testing **TrueNAS SCALE 22.12.1**, custom catalog = **TrueCharts**, Kubernetes Apps era). Kept for the record. It is **not** a claim about **25.10** Docker Apps.
+    > If it's your first time using the Apps page, you will be prompted to select a pool.
+    > 
+    > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
+4.  Click **Available Apps**.
+5.  Click **Install** next to the application you want to deploy.
+6.  Enter the configuration options for the application.
+7.  Click **Save**.
 
-### Limitations (as written for 22.12.1)
+### Using Custom Applications (Custom Charts)
 
+You can deploy custom applications from the TrueNAS SCALE web interface. To deploy a custom application, follow these steps:
+
+1.  Log in to the TrueNAS SCALE web interface.
+2.  Click **Apps**.
+
+    > If it's your first time using the Apps page, you will be prompted to select a pool.
+    >
+    > If you haven't created a pool yet, you can do by going to **Storage**, and click **Create Pool**.
+3.  Click **Manage Catalogs**.
+4.  Click **Add Catalog**.
+5.  Enter the **URL** of the **custom chart (repository)**, the **preferred Trains**, the **branch**, and the **name** of the catalog.
+6.  Click **Save**.
+7.  Create a Dataset by going to **Storage**, and click **Create Dataset** (optional, but it's recommended to isolate app data).
+8.  Click **Available Apps**.
+    > You may wait a few minutes for the added chart's applications to appear in the list.
+    >
+    > After a few moments, you should now see new applications added to the list.
+    >
+    > If you don't see the new applications, click **Refresh All**.
+9.  Click **Install** next to the application you want to deploy.
+10.  Enter the configuration options for the application.
+11. Click **Save**.
+
+## Limitations
 > The version of TrueNAS SCALE we are using for testing is 22.12.1.
-
-* TrueNAS SCALE does not support Clustering.
-* TrueNAS SCALE does not support High Availability.
-* TrueNAS SCALE does not support TrueNAS Enterprise features such as TrueNAS Enterprise Plugins, TrueNAS Enterprise Active Directory, TrueNAS Enterprise LDAP, TrueNAS Enterprise Kerberos, TrueNAS Enterprise SNMP, TrueNAS Enterprise S3...
-* TrueNAS SCALE does not support TrueNAS Enterprise hardware features such as TrueNAS Enterprise Hardware Encryption, TrueNAS Enterprise Hardware Acceleration...
+*   TrueNAS SCALE does not support Clustering.
+*   TrueNAS SCALE does not support High Availability.
+*   TrueNAS SCALE does not support TrueNAS Enterprise features such as TrueNAS Enterprise Plugins, TrueNAS Enterprise Active Directory, TrueNAS Enterprise LDAP, TrueNAS Enterprise Kerberos, TrueNAS Enterprise SNMP, TrueNAS Enterprise S3...
+*   TrueNAS SCALE does not support TrueNAS Enterprise hardware features such as TrueNAS Enterprise Hardware Encryption, TrueNAS Enterprise Hardware Acceleration...
 * TrueNAS SCALE does not offer a lot of customization options for the applications deployed from a docker image, or the official chart (Forcing you to exposing apps in nodePort always, not integrating a reverse proxy, etc.)
+* [...]
 
-### Known Issues (as written for 22.12.1)
-
+## Known Issues
 > The version of TrueNAS SCALE we are using for testing is 22.12.1.
-
 When Testing, we found the following issues : (The custom chart we used is TrueCharts)
 
-* When deploying apps from the official chart, the apps are accessible only on NodePort, we cannot configure them to use a certain type of service (ClusterIP, LoadBalancer, etc.). on the other hand, when deploying apps from the custom chart, we can configure the service type to use.
-* When deploying a reverse proxy from the custom chart, it works as expected, but pairing it with apps from the official chart, it's not possible to configure them to use the reverse proxy. (For example, when deploying a reverse proxy, and a Nextcloud app from the official chart, it's not possible to configure the ingress option of the Nextcloud app to use the reverse proxy).
-* When deploying apps from a custom chart, there's an option to expose the apps as a ClusterIP, but not on the official chart (Same App, different chart).
-* When deploying apps from the custom chart, it's possible to add custom storage, but for some raison, it doesn't work as expected. The apps are deployed, but the storage is not mounted (All type of storage: NFS, HostPath, EmptyDir, PVC, etc.). Also, we can deploy an app using custom chart when there's no storage needed in the configuration, but when we add a storage, it doesn't work as expected (For a lot of apps using the custom chart).
-* When deploying apps using **Launch Docker Image** option, there's no option to configure the service type (NodePort, ClusterIP, LoadBalancer, etc.), it's always NodePort. Also, there's no option to configure the ingress option.
-* It's required to edit the **timezone** of TrueNAS SCALE to match the timezone of the host, otherwise, the apps deployed from the custom chart will not work as expected (For example, when deploying a Nextcloud app from the custom chart, the timezone is not set correctly, and the app is not working as expected).
+*   When deploying apps from the official chart, the apps are accessible only on NodePort, we cannot configure them to use a certain type of service (ClusterIP, LoadBalancer, etc.). on the other hand, when deploying apps from the custom chart, we can configure the service type to use.
+*   When deploying a reverse proxy from the custom chart, it works as expected, but pairing it with apps from the official chart, it's not possible to configure them to use the reverse proxy. (For example, when deploying a reverse proxy, and a Nextcloud app from the official chart, it's not possible to configure the ingress option of the Nextcloud app to use the reverse proxy). 
+*   When deploying apps from a custom chart, there's an option to expose the apps as a ClusterIP, but not on the official chart (Same App, different chart).
+*   When deploying apps from the custom chart, it's possible to add custom storage, but for some raison, it doesn't work as expected. The apps are deployed, but the storage is not mounted (All type of storage: NFS, HostPath, EmptyDir, PVC, etc.). Also, we can deploy an app using custom chart when there's no storage needed in the configuration, but when we add a storage, it doesn't work as expected (For a lot of apps using the custom chart).
+*   When deploying apps using **Launch Docker Image** option, there's no option to configure the service type (NodePort, ClusterIP, LoadBalancer, etc.), it's always NodePort. Also, there's no option to configure the ingress option.
+*   It's required to edit the **timezone** of TrueNAS SCALE to match the timezone of the host, otherwise, the apps deployed from the custom chart will not work as expected (For example, when deploying a Nextcloud app from the custom chart, the timezone is not set correctly, and the app is not working as expected).
 
-**Do not treat the 22.12.1 list as current 25.10 bug status.** Prefer Docker Compose or catalog apps on Goldeye; re-lab before asserting new issues.
+## Current trains (not retested)
 
-## Practical recommendations (2026)
+Compiled from official TrueNAS docs as of September 2026 — **not** hands-on on this machine:
 
-1. Stay on the **General / Mission Critical** train from [Software Status](https://www.truenas.com/docs/softwarestatus/) unless you intentionally test **26 BETA**.
-2. Use TrueNAS for **ZFS + shares**; put complex app meshes on a VM or separate host if the Apps UI fights you.
-3. Prefer **Compose YAML** or catalog apps over resurrecting Kubernetes-era catalogs.
-4. Document your pool layout and credentials offline — not in this repo.
+*   Free product is branded **TrueNAS Community Edition** (same lineage as SCALE). Recommended stable train around **25.10.x (Goldeye)**; check [Software Status](https://www.truenas.com/docs/softwarestatus/).
+*   Apps backend since **24.10** is **Docker** (catalog apps + custom Compose YAML), not the Kubernetes / TrueCharts catalog flow described above.
+*   Download hub: [TrueNAS downloads](https://www.truenas.com/download/) / [Community Edition](https://www.truenas.com/download-truenas-community-edition).
+*   Apps docs: [Apps Market](https://apps.truenas.com/), [Installing Custom Apps](https://apps.truenas.com/managing-apps/installing-custom-apps/).
 
 ## References
 
-- [Software Status](https://www.truenas.com/docs/softwarestatus/)
-- [25.10 (Goldeye) docs](https://www.truenas.com/docs/scale/25.10/)
-- [25.10 version notes](https://www.truenas.com/docs/scale/25.10/gettingstarted/versionnotes/)
-- [Downloads](https://www.truenas.com/download/)
-- [TrueNAS Apps Market](https://apps.truenas.com/)
-- [Community Edition rename (blog)](https://www.truenas.com/blog/truenas-community-edition-release-2504/)
+*   [TrueNAS SCALE Documentation](https://www.truenas.com/docs/scale/)
+*   [TrueNAS SCALE Release Notes](https://www.truenas.com/docs/scale/release-notes/)
+*   [TrueNAS SCALE Installation Guide](https://www.truenas.com/docs/scale/install/)
+*   [TrueNAS SCALE User Guide](https://www.truenas.com/docs/scale/userguide/)
+*   [TrueNAS SCALE API Reference](https://www.truenas.com/docs/scale/api/)
+*   [TrueNAS SCALE Troubleshooting Guide](https://www.truenas.com/docs/scale/troubleshooting/)
+*   [Youtube: TrueNAS Scale the ULTIMATE Home Server? Docker, Kubernetes, Apps - Christian Lampa](https://www.youtube.com/watch?v=LJY9KBbL4j0)
+*   [Software Status](https://www.truenas.com/docs/softwarestatus/)
+*   [25.10 (Goldeye) docs](https://www.truenas.com/docs/scale/25.10/)
+*   [TrueNAS Apps Market](https://apps.truenas.com/)
 
 ## License
 
