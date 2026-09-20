@@ -71,17 +71,32 @@ Still true for Community Edition vs Enterprise (confirm on current Enterprise ma
 
 ## Historical lab notes (SCALE **22.12.1** + TrueCharts)
 
-The findings below were recorded against **TrueNAS SCALE 22.12.1** with the **old Kubernetes Apps** model and **TrueCharts**. They explain why many 2022–2024 “SCALE apps” guides feel wrong on **25.10**.
+The text below is the **original hands-on write-up** from this repo (testing **TrueNAS SCALE 22.12.1**, custom catalog = **TrueCharts**, Kubernetes Apps era). Kept for the record. It is **not** a claim about **25.10** Docker Apps.
 
-| Topic (22.12.1 era) | Observation then |
-|---|---|
-| Official chart networking | Often NodePort-only; limited service-type / ingress knobs vs TrueCharts |
-| TrueCharts + official apps | Hard to pair official apps behind a TrueCharts reverse proxy / ingress |
-| Custom storage on TrueCharts | HostPath / PVC / NFS mounts sometimes failed to attach while the app still “deployed” |
-| Launch Docker Image | Service type fixed to NodePort; little/no ingress config |
-| Timezone | Host/UI timezone mismatch broke some chart apps (e.g. Nextcloud clocks) |
+### Limitations (as written for 22.12.1)
 
-**Do not treat that table as current 25.10 bug status.** Re-validate on your build if you still care; prefer Docker Compose or catalog apps on Goldeye.
+> The version of TrueNAS SCALE we are using for testing is 22.12.1.
+
+* TrueNAS SCALE does not support Clustering.
+* TrueNAS SCALE does not support High Availability.
+* TrueNAS SCALE does not support TrueNAS Enterprise features such as TrueNAS Enterprise Plugins, TrueNAS Enterprise Active Directory, TrueNAS Enterprise LDAP, TrueNAS Enterprise Kerberos, TrueNAS Enterprise SNMP, TrueNAS Enterprise S3...
+* TrueNAS SCALE does not support TrueNAS Enterprise hardware features such as TrueNAS Enterprise Hardware Encryption, TrueNAS Enterprise Hardware Acceleration...
+* TrueNAS SCALE does not offer a lot of customization options for the applications deployed from a docker image, or the official chart (Forcing you to exposing apps in nodePort always, not integrating a reverse proxy, etc.)
+
+### Known Issues (as written for 22.12.1)
+
+> The version of TrueNAS SCALE we are using for testing is 22.12.1.
+
+When Testing, we found the following issues : (The custom chart we used is TrueCharts)
+
+* When deploying apps from the official chart, the apps are accessible only on NodePort, we cannot configure them to use a certain type of service (ClusterIP, LoadBalancer, etc.). on the other hand, when deploying apps from the custom chart, we can configure the service type to use.
+* When deploying a reverse proxy from the custom chart, it works as expected, but pairing it with apps from the official chart, it's not possible to configure them to use the reverse proxy. (For example, when deploying a reverse proxy, and a Nextcloud app from the official chart, it's not possible to configure the ingress option of the Nextcloud app to use the reverse proxy).
+* When deploying apps from a custom chart, there's an option to expose the apps as a ClusterIP, but not on the official chart (Same App, different chart).
+* When deploying apps from the custom chart, it's possible to add custom storage, but for some raison, it doesn't work as expected. The apps are deployed, but the storage is not mounted (All type of storage: NFS, HostPath, EmptyDir, PVC, etc.). Also, we can deploy an app using custom chart when there's no storage needed in the configuration, but when we add a storage, it doesn't work as expected (For a lot of apps using the custom chart).
+* When deploying apps using **Launch Docker Image** option, there's no option to configure the service type (NodePort, ClusterIP, LoadBalancer, etc.), it's always NodePort. Also, there's no option to configure the ingress option.
+* It's required to edit the **timezone** of TrueNAS SCALE to match the timezone of the host, otherwise, the apps deployed from the custom chart will not work as expected (For example, when deploying a Nextcloud app from the custom chart, the timezone is not set correctly, and the app is not working as expected).
+
+**Do not treat the 22.12.1 list as current 25.10 bug status.** Prefer Docker Compose or catalog apps on Goldeye; re-lab before asserting new issues.
 
 ## Practical recommendations (2026)
 
