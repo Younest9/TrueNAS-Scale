@@ -2,6 +2,8 @@
 
 Practical notes for running **TrueNAS Community Edition** (formerly TrueNAS SCALE) as a homelab NAS. This is **not** a vendor brochure: official docs win for install wizards and screenshots.
 
+**Hands-on status:** The only version **personally exercised** in this repo’s history was **SCALE 22.12.1** (Kubernetes Apps / TrueCharts era — see [Historical lab notes](#historical-lab-notes-scale-22121--truecharts)). Sections about **25.10 / Community Edition / Docker Apps** are **compiled from official TrueNAS documentation** (Software Status, 25.10 docs, Apps Market) as of September 2026 — **not** a fresh re-lab on Goldeye. Treat them as pointers, not “I just tested this.”
+
 **Doc baseline:** TrueNAS **25.10.x (Goldeye)** — recommended stable on the [Software Status](https://www.truenas.com/docs/softwarestatus/) page as of September 2026 (e.g. **25.10.7**). Early train: **26.x BETA** (not for production data).
 
 > Naming: from **25.04** onward, iX calls the free Linux product **TrueNAS Community Edition**. Older material still says “SCALE”; same lineage.
